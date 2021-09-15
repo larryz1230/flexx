@@ -19,12 +19,12 @@ date = str(month) + "/" + str(day) + "/" + str(year)
 
 def login():
     driver.get("https://teachmore.org/american/students/makeStudentAppointments.php")
-    sleep(4)
+    sleep(3)
     driver.find_element_by_id("access_login") \
         .send_keys("10018979")
     # ENTER USER
     driver.find_element_by_id("access_password") \
-        .send_keys("r2a1v2n")
+        .send_keys("r2a1v2en")
     #Enter Password
     driver.find_element_by_xpath('//*[@id="loginForm"]/input[3]') \
         .click()
