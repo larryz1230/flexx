@@ -48,6 +48,7 @@ def login():
     runn()
 
 
+
 #
 #
 #
@@ -108,14 +109,15 @@ def incrementday():
     day = curday.day
 
 
-login()
-while month < 13:
-    date = str(month) + "/" + str(day) + "/" + str(year)
-    if valid():
-        runn()
-    if day == endday and month == endmonth and year == endyear:
-        break
-    incrementday()
+glogin()
+# login()
+# while month < 13:
+#     date = str(month) + "/" + str(day) + "/" + str(year)
+#     if valid():
+#         runn()
+#     if day == endday and month == endmonth and year == endyear:
+#         break
+#     incrementday()
 
 
 driver.close()

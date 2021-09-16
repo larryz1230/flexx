@@ -1,26 +1,38 @@
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from time import sleep
 import datetime
 import array
+from selenium.webdriver.common.keys import Keys
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
+from selenium.webdriver.support.wait import WebDriverWait
 
 from webdriver_manager.chrome import ChromeDriverManager
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
 
 # Important information
+
+usegoogle = False
+
 # username
-username = "username"
+username = "user"
 # password
 password = "password"
+
+email = "email"
+epass = "pass"
+
 # start day
 month = 10
-day = 17
+day = 12
 year = 2021
-
 # end day
-endmonth = 10
-endday = 29
+endmonth = 12
+endday = 31
 endyear = 2021
 
 #  teacher ids
@@ -53,11 +65,37 @@ def login():
         .send_keys(password)
     driver.find_element_by_xpath('//*[@id="loginForm"]/input[3]') \
         .click()
-    sleep(2)
     driver.find_element_by_xpath("/html/body/div[3]/div[1]/div/div[2]/div[1]/a/button") \
         .click()
 
+    sleep(0.5)
+
+
+def glogin():
+    driver.get("https://teachmore.org/american/students/makeStudentAppointments.php")
+    sleep(3)
+    driver.find_element_by_xpath('/html/body/div/div/div[2]/div[2]/div/div[1]/a/img') \
+        .click()
+    driver.find_element_by_xpath('//*[@id="identifierId"]') \
+        .send_keys(email)
+    driver.find_element_by_xpath('//*[@id="identifierId"]') \
+        .send_keys(Keys.RETURN)
+    sleep(0.5)
+    WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//*[@id='password']/div[1]/div/div[1]/input"))).click()
+    sleep(0.5)
+    WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//*[@id='password']/div[1]/div/div[1]/input"))).send_keys(epass)
+    driver.find_element_by_xpath('//*[@id="password"]/div[1]/div/div[1]/input') \
+        .send_keys(Keys.RETURN)
+    WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "/html/body/div[3]/div[1]/div/div[2]/div[1]/a/button"))).send_keys(epass)
+    driver.find_element_by_xpath("/html/body/div[3]/div[1]/div/div[2]/div[1]/a/button").click()
     sleep(1.5)
+
+
+
+
 
 
 #
@@ -73,7 +111,6 @@ def login():
 #             # sleep(1.5)
 #         driver.refresh()
 #         sleep(1)
-
 
 def runn():
     today = datetime.datetime(year, month, day)
@@ -107,7 +144,6 @@ def valid():
     today = datetime.datetime(year, month, day)
     print(today.weekday())
     if today.weekday() >= 5 or today.weekday() == 0:
-        print("FALSLSALAS")
         return False
     return True
 
@@ -124,7 +160,10 @@ def incrementday():
     day = curday.day
 
 
-login()
+if usegoogle:
+    glogin()
+else:
+    login()
 while month < 13:
     date = str(month) + "/" + str(day) + "/" + str(year)
     if valid():
@@ -136,4 +175,4 @@ while month < 13:
     incrementday()
 
 
-driver.close()
+# driver.close()
