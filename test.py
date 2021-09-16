@@ -1,31 +1,43 @@
 from time import sleep
-
+import datetime
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 
 from webdriver_manager.chrome import ChromeDriverManager
+
 driver = webdriver.Chrome(ChromeDriverManager().install())
 
+# Important information
+# username
+username = "insert here"
+# password
+password = "insert here"
+# start day
+month = 10
+day = 20
+year = 2021
+
+# end day
+endmonth = 12
+endday = 15
+endyear = 2021
+
+date = str(month) + "/" + str(day) + "/" + str(year)
 
 #
 driver = webdriver.Chrome(ChromeDriverManager().install())
+
+
 # driver = webdriver.Chrome("C:/Users/larry/Desktop/chromedriver.exe")
 
-month = 12
-day = 7
-year = 2021
-
-date = str(month) + "/" + str(day) + "/" + str(year)
 
 def login():
     driver.get("https://teachmore.org/american/students/makeStudentAppointments.php")
     sleep(3)
     driver.find_element_by_id("access_login") \
-        .send_keys("10018979")
-    # ENTER USER
+        .send_keys(username)
     driver.find_element_by_id("access_password") \
-        .send_keys("r2a1v2en")
-    #Enter Password
+        .send_keys(password)
     driver.find_element_by_xpath('//*[@id="loginForm"]/input[3]') \
         .click()
     sleep(3)
@@ -34,7 +46,6 @@ def login():
 
     sleep(2)
     runn()
-
 
 
 #
@@ -76,14 +87,35 @@ def runn():
         .click()
 
 
+def valid():
+    today = datetime.datetime(year, month, day)
+    # print(today.weekday())
+    if today.weekday() >= 5 or today.weekday() == 0:
+        # print("FALSLSALAS")
+        return False
+    return True
+
+
+def incrementday():
+    global year
+    global month
+    global day
+    curday = datetime.datetime(year, month, day)
+    print(curday.date())
+    curday += datetime.timedelta(days=1)
+    year = curday.year
+    month = curday.month
+    day = curday.day
+
+
 login()
-for j in range(4):
-    for i in range(4):
-        date = str(month) + "/" + str(day) + "/" + str(year)
-        day += 1
+while month < 13:
+    date = str(month) + "/" + str(day) + "/" + str(year)
+    if valid():
         runn()
+    if day == endday and month == endmonth and year == endyear:
+        break
+    incrementday()
 
 
-    day += 3
-
-# follow()
+driver.close()
