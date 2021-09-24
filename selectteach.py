@@ -19,16 +19,18 @@ driver = webdriver.Chrome(ChromeDriverManager().install())
 usegoogle = False
 
 # username
-username = "user"
+username = ""
 # password
-password = "password"
+password = ""
 
-email = "email"
-epass = "pass"
+
+# google info
+email = ""
+epass = ""
 
 # start day
-month = 10
-day = 12
+month = 9
+day = 20
 year = 2021
 # end day
 endmonth = 12
@@ -39,11 +41,14 @@ endyear = 2021
 #  peffer - 92
 #  millard - 80
 #  wong - 125
+# cooper - 30
+# shockley - 110
 
-tueteach = 92
-wedteach = 92
-thurteach = 92
-friteach = 92
+
+tueteach = 110
+wedteach = 110
+thurteach = 110
+friteach = 110
 
 teacharr = [tueteach, wedteach, thurteach, friteach]
 print(teacharr[0])
@@ -51,9 +56,6 @@ date = str(month) + "/" + str(day) + "/" + str(year)
 
 #
 driver = webdriver.Chrome(ChromeDriverManager().install())
-
-
-# driver = webdriver.Chrome("C:/Users/larry/Desktop/chromedriver.exe")
 
 
 def login():
@@ -140,6 +142,14 @@ def runn():
         .click()
 
 
+def skipvalid():
+    today = datetime.datetime(year, month, day)
+    print(today.weekday())
+    if today.weekday() >= 5 or today.weekday() == 0 or today.weekday() == 3:
+        return False
+    return True
+
+
 def valid():
     today = datetime.datetime(year, month, day)
     print(today.weekday())
@@ -175,4 +185,4 @@ while month < 13:
     incrementday()
 
 
-# driver.close()
+driver.close()
