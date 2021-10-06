@@ -16,7 +16,7 @@ driver = webdriver.Chrome(ChromeDriverManager().install())
 
 # Important information
 
-usegoogle = False
+usegoogle = True
 
 # username
 username = ""
@@ -25,17 +25,17 @@ password = ""
 
 
 # google info
-email = ""
-epass = ""
+email = "larzhi979@fusdk12.net"
+epass = "superland43"
 
 # start day
-month = 9
-day = 20
+month = 12
+day = 4
 year = 2021
 # end day
-endmonth = 12
-endday = 31
-endyear = 2021
+endmonth = 3
+endday = 1
+endyear = 2022
 
 #  teacher ids
 #  peffer - 92
@@ -45,10 +45,10 @@ endyear = 2021
 # shockley - 110
 
 
-tueteach = 110
-wedteach = 110
-thurteach = 110
-friteach = 110
+tueteach = 111
+wedteach = 111
+thurteach = 111
+friteach = 111
 
 teacharr = [tueteach, wedteach, thurteach, friteach]
 print(teacharr[0])
@@ -56,6 +56,7 @@ date = str(month) + "/" + str(day) + "/" + str(year)
 
 #
 driver = webdriver.Chrome(ChromeDriverManager().install())
+driver.maximize_window()
 
 
 def login():
@@ -122,19 +123,25 @@ def runn():
         "//*[@id='calendar']/div[2]/div/table/tbody/tr/td/div/div/div/table/tbody/tr[5]/td[1]/div") \
         .click()
 
+
+
     x = driver.find_element_by_id('select1')
     # x.click()
     drop = Select(x)
-    drop.select_by_index(teacharr[dayy-1])
+    drop.select_by_index(teacharr[dayy - 1])
     # sleep(0.5)
     # sleep(1)
+
     x = driver.find_element_by_id('eventType')
     drop = Select(x)
     drop.select_by_index(1)
+
     x = driver.find_element_by_id('datepicker')
     x.click()
     x.clear()
     x.send_keys(date)
+
+
     # sleep(0.5)
     # drop = Select(x)
     # drop.select_by_index(1)
@@ -142,17 +149,51 @@ def runn():
         .click()
 
 
+    # today = datetime.datetime(year, month, day)
+    # dayy = today.weekday()
+    # sleep(0.7)
+    # driver.find_element_by_xpath(
+    #     "//*[@id='calendar']/div[2]/div/table/tbody/tr/td/div/div/div/table/tbody/tr[6]/td[1]/div/div[2]") \
+    #     .click()
+    #
+    # x = driver.find_element_by_id('select1')
+    # # x.click()
+    # drop = Select(x)
+    # drop.select_by_index(teacharr[dayy-1])
+    # # sleep(0.5)
+    # # sleep(1)
+    # print("selected teach")
+    # x = driver.find_element_by_id('eventType')
+    # drop = Select(x)
+    # drop.select_by_index(1)
+    # # sleep(1)
+    # print("selected event")
+    # x = driver.find_element_by_id('datepicker')
+    # x.click()
+    # x.clear()
+    # x.send_keys(date)
+    # print("picked date")
+    # sleep(2.5)
+    # drop = Select(x)
+
+    # driver.find_element_by_xpath("//*[@id='modal-title']").click()
+
+    # drop.select_by_index(1)
+    # WebDriverWait(driver, 10).until(
+    #     EC.element_to_be_clickable((By.XPATH, "/html/body/div[7]/div/div/div[3]/div/div/div[2]/button"))).click()
+
+
 def skipvalid():
     today = datetime.datetime(year, month, day)
-    print(today.weekday())
-    if today.weekday() >= 5 or today.weekday() == 0 or today.weekday() == 3:
+    # print(today.weekday())
+    if today.weekday() >= 5 or today.weekday() == 0:
         return False
     return True
 
 
 def valid():
     today = datetime.datetime(year, month, day)
-    print(today.weekday())
+    # print(today.weekday())
     if today.weekday() >= 5 or today.weekday() == 0:
         return False
     return True
@@ -163,7 +204,7 @@ def incrementday():
     global month
     global day
     curday = datetime.datetime(year, month, day)
-    print(curday.date())
+    # print(curday.date())
     curday += datetime.timedelta(days=1)
     year = curday.year
     month = curday.month
